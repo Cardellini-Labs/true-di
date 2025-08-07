@@ -1,5 +1,5 @@
-import UniqueStack from './unique-stack';
-import { IFactories, VoidFn } from './types';
+import UniqueStack from './unique-stack.js';
+import type { IFactories, VoidFn } from './types';
 
 const call = (fn: VoidFn) => fn();
 

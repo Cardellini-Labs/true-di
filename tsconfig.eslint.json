@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["eslint.config.mjs", "jest.config.js", "tsup.config.js", "benchmark/**/*.js"],
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": false
+  }
+}

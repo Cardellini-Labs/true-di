@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { assignProps } from './assign-props';
 
 describe('assignProps', () => {

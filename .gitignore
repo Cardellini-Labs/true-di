@@ -15,8 +15,7 @@ node_modules
 .npmrc
 
 # Build artifacts
-lib/
-esm/
+dist/
 
 # IDE settings
 .vscode

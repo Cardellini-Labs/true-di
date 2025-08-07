@@ -1,3 +1,4 @@
+import { describe, it, expect } from '@jest/globals';
 import diContainer from './di-container';
 import multiple from './multiple';
 

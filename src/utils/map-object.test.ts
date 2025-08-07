@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import mapObject from './map-object';
 import { expectStrictType } from './type-test-utils';
 

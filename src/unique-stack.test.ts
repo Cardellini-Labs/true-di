@@ -1,3 +1,4 @@
+import { describe, it, expect } from '@jest/globals';
 import UniqueStack from './unique-stack';
 import { expectStrictType } from './utils/type-test-utils';
 

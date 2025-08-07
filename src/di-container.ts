@@ -1,10 +1,10 @@
-import createInstanceFactory from './create-instance';
-import { IFactories, IPureFactories } from './types';
-import allNames from './utils/all-names';
-import assertExists from './utils/assert-exists';
-import mapObject from './utils/map-object';
-import narrowObject from './utils/narrow-object';
-import { shallowMerge } from './utils/shallow-merge';
+import createInstanceFactory from './create-instance.js';
+import type { IFactories, IPureFactories } from './types';
+import allNames from './utils/all-names.js';
+import assertExists from './utils/assert-exists.js';
+import mapObject from './utils/map-object.js';
+import narrowObject from './utils/narrow-object.js';
+import { shallowMerge } from './utils/shallow-merge.js';
 
 const $INSTANCES = Symbol('TRUE-DI::INSTANCES');
 

@@ -1,5 +1,5 @@
-import { IFactory, IFactoryTuple, IFactories } from './types';
-import allNames from './utils/all-names';
+import type { IFactory, IFactoryTuple, IFactories } from './types';
+import allNames from './utils/all-names.js';
 
 const cleaner = <C>(instance: any, container: C, name: keyof C) => {
   container[name] = null as any;

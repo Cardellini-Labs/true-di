@@ -1,8 +1,8 @@
-import diContainer from './di-container';
-import multiple from './multiple';
+import diContainer from './di-container.js';
+import multiple from './multiple.js';
 
-export * from './types';
-export * from './di-container';
+export type * from './types';
+export * from './di-container.js';
 export { multiple };
 
 export default diContainer;

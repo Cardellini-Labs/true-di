@@ -1,5 +1,6 @@
-import { expectStrictType } from './type-test-utils';
+import { describe, expect, it } from '@jest/globals';
 import { shallowMerge } from './shallow-merge';
+import { expectStrictType } from './type-test-utils';
 
 describe('shallowMerge', () => {
   it('copies an object if only one is passed', () => {

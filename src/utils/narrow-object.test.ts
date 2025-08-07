@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import narrowObject from './narrow-object';
 
 describe('narrowObject', () => {

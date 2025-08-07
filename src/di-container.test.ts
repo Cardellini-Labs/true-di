@@ -1,3 +1,4 @@
+import { describe, it, expect, jest } from '@jest/globals';
 import diContainer, {
   factoriesFrom, isReady, prepareAll, releaseAll,
 } from './di-container';

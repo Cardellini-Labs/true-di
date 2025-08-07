@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { assignProps, shallowMerge } from '.';
 
 describe('Exported utils', () => {
