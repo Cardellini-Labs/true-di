@@ -4,7 +4,8 @@ import narrowObject from './narrow-object';
 describe('narrowObject', () => {
   it('returns the copy if no names are specified', () => {
     const object = {
-      x: 1, y: 2,
+      x: 1,
+      y: 2,
     };
 
     expect(narrowObject(object)).toEqual(object);

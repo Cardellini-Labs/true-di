@@ -32,7 +32,7 @@ describe('Logger', () => {
     });
   });
 
-  it('doesn\'t print to console info message with .info method if logLevel is less then INFO', () => {
+  it("doesn't print to console info message with .info method if logLevel is less then INFO", () => {
     const logger = new ConsoleLogger(LogLevel.INFO - 1);
 
     logger.info('Some Message');
@@ -53,7 +53,7 @@ describe('Logger', () => {
     });
   });
 
-  it('doesn\'t print to console warning message with .warn method if logLevel is less then WARINING', () => {
+  it("doesn't print to console warning message with .warn method if logLevel is less then WARINING", () => {
     const logger = new ConsoleLogger(LogLevel.WARNING - 1);
 
     logger.warn('Some Warning');
@@ -74,7 +74,7 @@ describe('Logger', () => {
     });
   });
 
-  it('doesn\'t print to console error message with .error method if logLevel is less then ERROR', () => {
+  it("doesn't print to console error message with .error method if logLevel is less then ERROR", () => {
     const logger = new ConsoleLogger(LogLevel.SILENT);
 
     logger.error(new Error('Some Error Message'));

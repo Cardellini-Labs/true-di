@@ -16,7 +16,13 @@ describe('Orders', () => {
     });
 
     it('creates an orderItem with specified values', () => {
-      const orderItem: OrderItem = createOrderItem('orderItemId', 'orderId', 'sku', 10, 1);
+      const orderItem: OrderItem = createOrderItem(
+        'orderItemId',
+        'orderId',
+        'sku',
+        10,
+        1,
+      );
 
       expect(orderItem).toEqual({
         id: 'orderItemId',
@@ -64,9 +70,7 @@ describe('Orders', () => {
 
       const orders: Order[] = ordersFromItems(orderItems);
 
-      expect(orders).toEqual([
-        createOrder('orderId', orderItems, 100),
-      ]);
+      expect(orders).toEqual([createOrder('orderId', orderItems, 100)]);
     });
 
     it('returns groups orderItems with the same id to the single order', () => {
@@ -77,9 +81,7 @@ describe('Orders', () => {
 
       const orders: Order[] = ordersFromItems(orderItems);
 
-      expect(orders).toEqual([
-        createOrder('orderId', orderItems, 300),
-      ]);
+      expect(orders).toEqual([createOrder('orderId', orderItems, 300)]);
     });
 
     it('returns groups orderItems with the different orderId to the diferent orders', () => {

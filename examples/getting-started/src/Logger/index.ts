@@ -6,7 +6,7 @@ export enum LogLevel {
   ERROR = 1,
   WARNING = 2,
   INFO = 3,
-  VERBOSE = 4
+  VERBOSE = 4,
 }
 
 class ConsoleLogger implements ILogger {

@@ -1,43 +1,23 @@
-export type Merge<T1 extends object, T2 extends object> =
-  Omit<T1, keyof T2> & T2; // Overriding Join
+export type Merge<T1 extends object, T2 extends object> = Omit<T1, keyof T2> &
+  T2; // Overriding Join
 
 type IShallowMergeFn = {
-  <T1 extends object>(
-    obj1: T1,
-  ): T1;
+  <T1 extends object>(obj1: T1): T1;
 
-  <
-    T1 extends object,
-    T2 extends object
-  >(
-    obj1: T1,
-    obj2: T2,
-  ): Merge<T1, T2>;
+  <T1 extends object, T2 extends object>(obj1: T1, obj2: T2): Merge<T1, T2>;
 
-  <
-    T1 extends object,
-    T2 extends object,
-    T3 extends object
-  >(
+  <T1 extends object, T2 extends object, T3 extends object>(
     obj1: T1,
     obj2: T2,
     obj3: T3,
-  ): Merge<
-    Merge<T1, T2>, T3>;
+  ): Merge<Merge<T1, T2>, T3>;
 
-  <
-    T1 extends object,
-    T2 extends object,
-    T3 extends object,
-    T4 extends object
-  >(
+  <T1 extends object, T2 extends object, T3 extends object, T4 extends object>(
     obj1: T1,
     obj2: T2,
     obj3: T3,
     obj4: T4,
-  ): Merge<
-    Merge<
-    Merge<T1, T2>, T3>, T4>;
+  ): Merge<Merge<Merge<T1, T2>, T3>, T4>;
 
   <
     T1 extends object,
@@ -51,10 +31,7 @@ type IShallowMergeFn = {
     obj3: T3,
     obj4: T4,
     obj5: T5,
-  ): Merge<
-    Merge<
-    Merge<
-    Merge<T1, T2>, T3>, T4>, T5>;
+  ): Merge<Merge<Merge<Merge<T1, T2>, T3>, T4>, T5>;
 
   <
     T1 extends object,
@@ -70,11 +47,7 @@ type IShallowMergeFn = {
     obj4: T4,
     obj5: T5,
     obj6: T6,
-  ): Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<T1, T2>, T3>, T4>, T5>, T6>;
+  ): Merge<Merge<Merge<Merge<Merge<T1, T2>, T3>, T4>, T5>, T6>;
 
   <
     T1 extends object,
@@ -92,12 +65,7 @@ type IShallowMergeFn = {
     obj5: T5,
     obj6: T6,
     obj7: T7,
-  ): Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<T1, T2>, T3>, T4>, T5>, T6>, T7>;
+  ): Merge<Merge<Merge<Merge<Merge<Merge<T1, T2>, T3>, T4>, T5>, T6>, T7>;
 
   <
     T1 extends object,
@@ -118,12 +86,9 @@ type IShallowMergeFn = {
     obj7: T7,
     obj8: T8,
   ): Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<T1, T2>, T3>, T4>, T5>, T6>, T7>, T8>;
+    Merge<Merge<Merge<Merge<Merge<Merge<T1, T2>, T3>, T4>, T5>, T6>, T7>,
+    T8
+  >;
 
   <
     T1 extends object,
@@ -147,12 +112,11 @@ type IShallowMergeFn = {
     obj9: T9,
   ): Merge<
     Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<T1, T2>, T3>, T4>, T5>, T6>, T7>, T8>, T9>;
+      Merge<Merge<Merge<Merge<Merge<Merge<T1, T2>, T3>, T4>, T5>, T6>, T7>,
+      T8
+    >,
+    T9
+  >;
 
   <
     T1 extends object,
@@ -178,13 +142,14 @@ type IShallowMergeFn = {
     objA: TA,
   ): Merge<
     Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<T1, T2>, T3>, T4>, T5>, T6>, T7>, T8>, T9>, TA>;
+      Merge<
+        Merge<Merge<Merge<Merge<Merge<Merge<T1, T2>, T3>, T4>, T5>, T6>, T7>,
+        T8
+      >,
+      T9
+    >,
+    TA
+  >;
 
   <
     T1 extends object,
@@ -212,15 +177,16 @@ type IShallowMergeFn = {
     objB: TB,
   ): Merge<
     Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    T1, T2>, T3>, T4>, T5>, T6>, T7>, T8>, T9>, TA>, TB
+      Merge<
+        Merge<
+          Merge<Merge<Merge<Merge<Merge<Merge<T1, T2>, T3>, T4>, T5>, T6>, T7>,
+          T8
+        >,
+        T9
+      >,
+      TA
+    >,
+    TB
   >;
 
   <
@@ -251,21 +217,30 @@ type IShallowMergeFn = {
     objC: TC,
   ): Merge<
     Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    Merge<
-    T1, T2>, T3>, T4>, T5>, T6>, T7>, T8>, T9>, TA>, TB>, TC
+      Merge<
+        Merge<
+          Merge<
+            Merge<
+              Merge<Merge<Merge<Merge<Merge<T1, T2>, T3>, T4>, T5>, T6>,
+              T7
+            >,
+            T8
+          >,
+          T9
+        >,
+        TA
+      >,
+      TB
+    >,
+    TC
   >;
-}
+};
 
-export const shallowMerge: IShallowMergeFn = <C extends Object>(...objects: C[]): C =>
+export const shallowMerge: IShallowMergeFn = <C extends object>(
+  ...objects: C[]
+): C =>
   objects.reduce(
-    (newObject, obj) => Object.defineProperties(newObject, Object.getOwnPropertyDescriptors(obj)),
+    (newObject, obj) =>
+      Object.defineProperties(newObject, Object.getOwnPropertyDescriptors(obj)),
     Object.create(null),
   );

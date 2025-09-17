@@ -7,10 +7,10 @@ describe('UniqueStack', () => {
     const stack = UniqueStack<string>();
 
     type Expected = {
-      push:(value: string) => [Error, null] | [null, string],
-      pop: (expected?: string) => [Error, null] | [null, string],
-      readonly size: number,
-      readonly items: string[],
+      push: (value: string) => [Error, null] | [null, string];
+      pop: (expected?: string) => [Error, null] | [null, string];
+      readonly size: number;
+      readonly items: string[];
     };
 
     expectStrictType<Expected>(stack);
@@ -67,7 +67,9 @@ describe('UniqueStack', () => {
     stack.push(1);
     const [error] = stack.push(1);
     expect(error).toBeInstanceOf(Error);
-    expect(error!.message).toBe('Duplicated item has been pushed to the stack.');
+    expect(error!.message).toBe(
+      'Duplicated item has been pushed to the stack.',
+    );
   });
 
   it('returns an StackSequenceError on poping from empty stack', () => {

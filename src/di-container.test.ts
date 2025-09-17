@@ -1,6 +1,9 @@
 import { describe, it, expect, jest } from '@jest/globals';
 import diContainer, {
-  factoriesFrom, isReady, prepareAll, releaseAll,
+  factoriesFrom,
+  isReady,
+  prepareAll,
+  releaseAll,
 } from './di-container';
 import { expectStrictType } from './utils/type-test-utils';
 import { assignProps } from './utils/assign-props';
@@ -10,7 +13,7 @@ import { IFactories } from './types';
 describe('diContainer', () => {
   it('creates a container', () => {
     type Container = {
-      x: number,
+      x: number;
     };
 
     const container = diContainer<Container>({
@@ -25,10 +28,10 @@ describe('diContainer', () => {
 
   it('allows to resolve dependency in chain', () => {
     type Container = {
-      x: number,
-      y: number,
-      z: number,
-    }
+      x: number;
+      y: number;
+      z: number;
+    };
 
     const container = diContainer<Container>({
       x: () => 1,
@@ -41,35 +44,35 @@ describe('diContainer', () => {
 
   it('throws an exception in case of cyclic dependency', () => {
     type Container = {
-      x: number,
-      y: number,
-    }
+      x: number;
+      y: number;
+    };
 
     const container = diContainer<Container>({
       x: ({ y }) => y,
       y: ({ x }) => x + 2,
     });
 
-    expect(
-      () => container.x,
-    ).toThrow('Cyclic dependencies couldn\'t be resolved.');
+    expect(() => container.x).toThrow(
+      "Cyclic dependencies couldn't be resolved.",
+    );
   });
 
   it('throws an exception in case when error during dependency creation is suppressed', () => {
     type Container = {
-      x: number,
-      y: () => number,
-    }
+      x: number;
+      y: () => number;
+    };
 
     const container = diContainer<Container>({
       x: () => {
         throw new Error('Failed to create x');
       },
-      y: c => {
+      y: (c) => {
         let x: number;
         try {
           x = c.x;
-        } catch (err) {
+        } catch {
           x = 5;
         }
 
@@ -77,31 +80,29 @@ describe('diContainer', () => {
       },
     });
 
-    expect(
-      () => container.y,
-    ).toThrow('Not all dependencies resolved correctly.');
+    expect(() => container.y).toThrow(
+      'Not all dependencies resolved correctly.',
+    );
   });
 
-  it('throws an error in attempt to assign any it\'s value', () => {
+  it("throws an error in attempt to assign any it's value", () => {
     type Container = {
-      x: number,
+      x: number;
     };
 
     const container = diContainer<Container>({
       x: () => 42,
     });
 
-    expect(
-      () => {
-        container.x = 50;
-      },
-    ).toThrow();
+    expect(() => {
+      container.x = 50;
+    }).toThrow();
   });
 
   it('works with Symbols', () => {
     const itemSymbol = Symbol('item');
     type Container = {
-      [itemSymbol]: number
+      [itemSymbol]: number;
     };
 
     const itemFactory = jest.fn(() => 42);
@@ -117,8 +118,8 @@ describe('diContainer', () => {
   it('allows to create container from factories defined separetelly', () => {
     const factories = {
       x: () => 42,
-      y: (c: { x: number, y: (z: number) => number }) =>
-        (z: number) => (z > 0 ? c.y(-c.x - z) : z),
+      y: (c: { x: number; y: (z: number) => number }) => (z: number) =>
+        z > 0 ? c.y(-c.x - z) : z,
     };
 
     const container = diContainer(factories);
@@ -129,9 +130,9 @@ describe('diContainer', () => {
 
   it('allows to create all entities in single moment', () => {
     type Container = {
-      x: number,
-      y: number,
-      z: number,
+      x: number;
+      y: number;
+      z: number;
     };
 
     const container = diContainer<Container>({
@@ -147,11 +148,11 @@ describe('diContainer', () => {
     expect(values2).toEqual({ x: 42, y: 84, z: 126 });
   });
 
-  it('don\'t allow to delete items in the container', () => {
+  it("don't allow to delete items in the container", () => {
     type Container = {
-      x: number,
-      y: number,
-      z: number,
+      x: number;
+      y: number;
+      z: number;
     };
 
     const container = diContainer<Container>({
@@ -160,19 +161,16 @@ describe('diContainer', () => {
       z: ({ x, y }) => x + y,
     });
 
-    expect(
-      () => {
-        // @ts-ignore
-        delete container.x;
-      },
-    ).toThrow();
+    expect(() => {
+      delete (container as any).x;
+    }).toThrow();
   });
 
-  it('allows to unbind name from it\'s value', () => {
+  it("allows to unbind name from it's value", () => {
     type Container = {
-      x: { value: number },
-      y: number,
-      z: number,
+      x: { value: number };
+      y: number;
+      z: number;
     };
 
     const container = diContainer<Container>({
@@ -189,9 +187,9 @@ describe('diContainer', () => {
   });
   it('allows to get ownPropertyDescriptor', () => {
     type Container = {
-      x: number,
-      y: number,
-      z: number,
+      x: number;
+      y: number;
+      z: number;
     };
 
     const container = diContainer<Container>({
@@ -208,9 +206,9 @@ describe('diContainer', () => {
 
   it('ownPropertyDescriptor returns undefined if field is not defined', () => {
     type Container = {
-      x: number,
-      y: number,
-      z: number,
+      x: number;
+      y: number;
+      z: number;
     };
 
     const container = diContainer<Container>({
@@ -223,11 +221,11 @@ describe('diContainer', () => {
     expect(descriptor).toBeUndefined();
   });
 
-  it('it doesn\'t declare symbols as keys', () => {
+  it("it doesn't declare symbols as keys", () => {
     const y = Symbol('y');
     type Container = {
-      x: number,
-      [y]: number,
+      x: number;
+      [y]: number;
     };
 
     const container = diContainer<Container>({
@@ -241,8 +239,8 @@ describe('diContainer', () => {
   it('it allows to get descriptor for Symbolic property', () => {
     const y = Symbol('y');
     type Container = {
-      x: number,
-      [y]: number,
+      x: number;
+      [y]: number;
     };
 
     const container = diContainer<Container>({
@@ -258,24 +256,30 @@ describe('diContainer', () => {
 
   it('calls initializer to resolve cyclic dependencies (both initialzier)', () => {
     type Node = {
-      child: Node | null,
-      parent: Node | null,
-    }
+      child: Node | null;
+      parent: Node | null;
+    };
 
     type Container = {
-      parentItem: Node,
-      childItem: Node,
-    }
+      parentItem: Node;
+      childItem: Node;
+    };
 
     const createNode = (): Node => ({ child: null, parent: null });
 
     const container = diContainer<Container>({
-      parentItem: [createNode, (self, { childItem }) => {
-        self.child = childItem;
-      }],
-      childItem: [createNode, (self, { parentItem }) => {
-        self.parent = parentItem;
-      }],
+      parentItem: [
+        createNode,
+        (self, { childItem }) => {
+          self.child = childItem;
+        },
+      ],
+      childItem: [
+        createNode,
+        (self, { parentItem }) => {
+          self.parent = parentItem;
+        },
+      ],
     });
 
     const child = container.childItem;
@@ -287,25 +291,31 @@ describe('diContainer', () => {
 
   it('calls initializer to resolve cyclic dependencies (both initialzier) with assignProps', () => {
     type Node = {
-      name: string,
-      child: Node | null,
-      parent: Node | null,
-    }
+      name: string;
+      child: Node | null;
+      parent: Node | null;
+    };
 
     type Container = {
-      childName: string,
-      parentName: string,
-      parentItem: Node,
-      childItem: Node,
-    }
+      childName: string;
+      parentName: string;
+      parentItem: Node;
+      childItem: Node;
+    };
 
     const createNode = (): Node => ({ name: '', child: null, parent: null });
 
     const container = diContainer<Container>({
       childName: () => 'The Child',
       parentName: () => 'The Parent',
-      parentItem: [createNode, assignProps({ child: 'childItem', name: 'parentName' })],
-      childItem: [createNode, assignProps({ parent: 'parentItem', name: 'childName' })],
+      parentItem: [
+        createNode,
+        assignProps({ child: 'childItem', name: 'parentName' }),
+      ],
+      childItem: [
+        createNode,
+        assignProps({ parent: 'parentItem', name: 'childName' }),
+      ],
     });
 
     const child = container.childItem;
@@ -317,23 +327,24 @@ describe('diContainer', () => {
 
   it('allows to nest containers', () => {
     type Nested = {
-      x: number,
-      y: number,
-      z: number,
+      x: number;
+      y: number;
+      z: number;
     };
 
     type Parent = {
-      alpha: string,
-      betta: Nested,
+      alpha: string;
+      betta: Nested;
     };
 
     const container = diContainer<Parent>({
       alpha: () => 'alpha',
-      betta: parent => diContainer<Nested>({
-        x: () => 1,
-        y: () => 2,
-        z: ({ x, y }) => (x + y) * parent.alpha.length,
-      }),
+      betta: (parent) =>
+        diContainer<Nested>({
+          x: () => 1,
+          y: () => 2,
+          z: ({ x, y }) => (x + y) * parent.alpha.length,
+        }),
     });
 
     expect(container.betta.z).toBe(15);
@@ -341,9 +352,9 @@ describe('diContainer', () => {
 
   it('allows to declare partial factories', () => {
     type IContainer = {
-      x: number,
-      y: string,
-      z: boolean,
+      x: number;
+      y: string;
+      z: boolean;
     };
 
     const xFactory: Pick<IFactories<IContainer>, 'x'> = {
@@ -372,55 +383,76 @@ describe('diContainer', () => {
 
     const y = () => 'Y';
 
-    // eslint-disable-next-line no-shadow
-    const z = ({ x, y }: { x: number, y: string }) => y.length === x;
+    const z = ({ x, y }: { x: number; y: string }) => y.length === x;
 
-    // eslint-disable-next-line no-shadow
     const t = ({ z }: { z: boolean }) => !z;
 
     const container = diContainer({
-      x, y, z, t,
+      x,
+      y,
+      z,
+      t,
     });
 
-    expectStrictType<{ x: number, y: string, z: boolean, t: boolean }>(container);
+    expectStrictType<{ x: number; y: string; z: boolean; t: boolean }>(
+      container,
+    );
 
     expect(container.z).toBe(true);
   });
 
   it('allows to expose only part of container', () => {
     const factory1 = (): number => 1;
-    const factory2 = ({ service1 }: { service1: number }): string => `${service1}`;
-    const factory3 = (
-      { service1, service2 }: { service1: number, service2: string },
-    ): [number, string] => [service1, service2];
+    const factory2 = ({ service1 }: { service1: number }): string =>
+      `${service1}`;
+    const factory3 = ({
+      service1,
+      service2,
+    }: {
+      service1: number;
+      service2: string;
+    }): [number, string] => [service1, service2];
 
-    const container = diContainer({
-      service1: factory1,
-      service2: factory2,
-    }, {
-      service3: factory3,
-    });
+    const container = diContainer(
+      {
+        service1: factory1,
+        service2: factory2,
+      },
+      {
+        service3: factory3,
+      },
+    );
 
-    expectStrictType<{service3: [number, string] }>(container);
+    expectStrictType<{ service3: [number, string] }>(container);
 
     expect(container).toEqual({ service3: [1, '1'] });
   });
 
   it('allows to use public service in private factory', () => {
     const factory1 = (): number => 1;
-    const factory2 = ({ service1 }: { service1: number }): string => `${service1}`;
-    const factory3 = (
-      { service1, service2 }: { service1: number, service2: string },
-    ): [number, string] => [service1, service2];
+    const factory2 = ({ service1 }: { service1: number }): string =>
+      `${service1}`;
+    const factory3 = ({
+      service1,
+      service2,
+    }: {
+      service1: number;
+      service2: string;
+    }): [number, string] => [service1, service2];
 
-    const container = diContainer({
-      service2: factory2,
-    }, {
-      service1: factory1,
-      service3: factory3,
-    });
+    const container = diContainer(
+      {
+        service2: factory2,
+      },
+      {
+        service1: factory1,
+        service3: factory3,
+      },
+    );
 
-    expectStrictType<{ service1: number, service3: [number, string] }>(container);
+    expectStrictType<{ service1: number; service3: [number, string] }>(
+      container,
+    );
 
     expect(container).toEqual({ service1: 1, service3: [1, '1'] });
   });
@@ -429,9 +461,9 @@ describe('diContainer', () => {
 describe('isReady', () => {
   it('allows to identify if some component is ready', () => {
     type Container = {
-      x: { value: number },
-      y: number,
-      z: number,
+      x: { value: number };
+      y: number;
+      z: number;
     };
 
     const container = diContainer<Container>({
@@ -449,9 +481,9 @@ describe('isReady', () => {
 
   it('allows to identify if some component is not ready', () => {
     type Container = {
-      x: { value: number },
-      y: number,
-      z: number,
+      x: { value: number };
+      y: number;
+      z: number;
     };
 
     const container = diContainer<Container>({
@@ -464,8 +496,7 @@ describe('isReady', () => {
 
     expect(isReady(container, 'x')).toBeTruthy();
 
-    // @ts-ignore
-    container.x = null;
+    (container as any).x = null;
 
     expect(isReady(container, 'x')).toBeFalsy();
   });
@@ -474,9 +505,9 @@ describe('isReady', () => {
 describe('prepareAll', () => {
   it('allows to create all items in the container', () => {
     type Container = {
-      x: number,
-      y: number,
-      z: number,
+      x: number;
+      y: number;
+      z: number;
     };
 
     const container = diContainer<Container>({
@@ -496,11 +527,11 @@ describe('prepareAll', () => {
     expect(isReady(container, 'z')).toBeTruthy();
   });
 
-  it('creates the same as spread operator if container doesn\'t have non-enumerable props', () => {
+  it("creates the same as spread operator if container doesn't have non-enumerable props", () => {
     type Container = {
-      x: number,
-      y: number,
-      z: number,
+      x: number;
+      y: number;
+      z: number;
     };
 
     const container = diContainer<Container>({
@@ -509,23 +540,23 @@ describe('prepareAll', () => {
       z: () => 3,
     });
 
-    expect(
-      prepareAll(container),
-    ).toEqual({ ...container });
+    expect(prepareAll(container)).toEqual({ ...container });
   });
 
   it('creates items also for non-enumerable props', () => {
     type Container = {
-      x: number,
-      y: number,
-      z: number,
+      x: number;
+      y: number;
+      z: number;
     };
 
-    const container = diContainer<Container>(Object.create(null, {
-      x: { value: () => 1, enumerable: true },
-      y: { value: () => 2, enumerable: true },
-      z: { value: () => 3, enumerable: false },
-    }));
+    const container = diContainer<Container>(
+      Object.create(null, {
+        x: { value: () => 1, enumerable: true },
+        y: { value: () => 2, enumerable: true },
+        z: { value: () => 3, enumerable: false },
+      }),
+    );
 
     prepareAll(container);
 
@@ -538,9 +569,9 @@ describe('prepareAll', () => {
 describe('releaseAll', () => {
   it('allows to release all items in the container', () => {
     type Container = {
-      x: number,
-      y: number,
-      z: number,
+      x: number;
+      y: number;
+      z: number;
     };
 
     const container = diContainer<Container>({
@@ -566,8 +597,8 @@ describe('releaseAll', () => {
 describe('factoriesFrom', () => {
   it('creates a factories object from container', () => {
     type IContainer = {
-      x: number,
-      y: string,
+      x: number;
+      y: string;
     };
 
     const container = diContainer<IContainer>({
@@ -585,10 +616,10 @@ describe('factoriesFrom', () => {
     expect(factories.y()).toBe(container.y);
   });
 
-  it('doesn\'t affect container items', () => {
+  it("doesn't affect container items", () => {
     type IContainer = {
-      x: number,
-      y: string,
+      x: number;
+      y: string;
     };
 
     const container = diContainer<IContainer>({
@@ -604,8 +635,8 @@ describe('factoriesFrom', () => {
   it('creates a factories object from container (with symbolic names)', () => {
     const $field = Symbol('symbolic name');
     type IContainer = {
-      x: number,
-      [$field]: object,
+      x: number;
+      [$field]: object;
     };
 
     const originalFactories: IFactories<IContainer> = {
@@ -628,14 +659,14 @@ describe('factoriesFrom', () => {
 
   it('allows to merge two containers', () => {
     type IContainer1 = {
-      x: number,
-      y: string,
+      x: number;
+      y: string;
     };
 
     type IContainer2 = {
-      z: string,
-      t: number,
-    }
+      z: string;
+      t: number;
+    };
 
     const container1 = diContainer<IContainer1>({
       x: () => 42,
@@ -669,7 +700,7 @@ describe('factoriesFrom', () => {
     type IContainer2 = {
       z: string;
       t: number;
-    }
+    };
 
     const container1 = diContainer<IContainer1>({
       x: () => 42,
@@ -702,14 +733,14 @@ describe('factoriesFrom', () => {
 
   it('allows to create extending container', () => {
     type IContainer1 = {
-      x: number,
-      y: string,
+      x: number;
+      y: string;
     };
 
     type IContainer2 = {
-      z: string,
-      t: number,
-    }
+      z: string;
+      t: number;
+    };
 
     const container1 = diContainer<IContainer1>({
       x: () => 42,

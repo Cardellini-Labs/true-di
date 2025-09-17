@@ -5,12 +5,13 @@ import { expectStrictType } from './type-test-utils';
 describe('shallowMerge', () => {
   it('copies an object if only one is passed', () => {
     const obj = {
-      x: 1, y: 'y',
+      x: 1,
+      y: 'y',
     };
 
     const newObj: {
-      x: number,
-      y: string
+      x: number;
+      y: string;
     } = shallowMerge(obj);
 
     expect(newObj).toEqual(obj);
@@ -20,13 +21,15 @@ describe('shallowMerge', () => {
   it('copies an object if only one is passed including symbolic names', () => {
     const $field = Symbol('symbolic name');
     const obj = {
-      x: 1, y: 'y', [$field]: new Date(),
+      x: 1,
+      y: 'y',
+      [$field]: new Date(),
     };
 
     const newObj: {
-      x: number,
-      y: string,
-      [$field]: Date,
+      x: number;
+      y: string;
+      [$field]: Date;
     } = shallowMerge(obj);
 
     expect(newObj).toEqual(obj);
@@ -37,26 +40,31 @@ describe('shallowMerge', () => {
     const t = () => {};
 
     const obj1 = {
-      x: 1, y: 'y',
+      x: 1,
+      y: 'y',
     };
 
     const obj2 = {
-      z: true, t,
+      z: true,
+      t,
     };
 
     const newObj = shallowMerge(obj1, obj2);
 
     type ResultObjType = {
-      x: number,
-      y: string,
-      z: boolean,
-      t: () => void,
+      x: number;
+      y: string;
+      z: boolean;
+      t: () => void;
     };
 
     expectStrictType<ResultObjType>(newObj);
 
     expect(newObj).toEqual({
-      x: 1, y: 'y', z: true, t,
+      x: 1,
+      y: 'y',
+      z: true,
+      t,
     });
 
     expect(newObj).not.toBe(obj1);
@@ -67,11 +75,14 @@ describe('shallowMerge', () => {
     const t = () => {};
 
     const obj1 = {
-      x: 1, y: 'y', t: false,
+      x: 1,
+      y: 'y',
+      t: false,
     };
 
     const obj2 = {
-      z: true, t,
+      z: true,
+      t,
     };
 
     const newObj = shallowMerge(obj1, obj2);
@@ -79,14 +90,17 @@ describe('shallowMerge', () => {
     type ResultObjType = {
       x: number;
       y: string;
-      z: Boolean;
-      t:() => void;
-    }
+      z: boolean;
+      t: () => void;
+    };
 
     expectStrictType<ResultObjType>(newObj);
 
     expect(newObj).toEqual({
-      x: 1, y: 'y', z: true, t,
+      x: 1,
+      y: 'y',
+      z: true,
+      t,
     });
 
     expect(newObj).not.toBe(obj1);

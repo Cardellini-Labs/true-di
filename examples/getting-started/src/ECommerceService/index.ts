@@ -1,6 +1,9 @@
 import { strict as assert } from 'assert';
 import {
-  IECommerceService, IDataSourceService, Order, IInfoLogger,
+  IECommerceService,
+  IDataSourceService,
+  Order,
+  IInfoLogger,
 } from '../interfaces';
 import { ordersFromItems } from '../Orders';
 import { isUUID } from '../utils/isUUID';
@@ -10,10 +13,7 @@ class ECommerceService implements IECommerceService {
 
   readonly #dataSourceService: IDataSourceService;
 
-  constructor(
-    logger: IInfoLogger,
-    dataSourceService: IDataSourceService,
-  ) {
+  constructor(logger: IInfoLogger, dataSourceService: IDataSourceService) {
     this.#logger = logger;
     this.#dataSourceService = dataSourceService;
     logger.info('ECommerceService has been created');
@@ -36,9 +36,7 @@ class ECommerceService implements IECommerceService {
       ({ orderId }) => orderId === id,
     );
 
-    return orderItems.length > 0
-      ? ordersFromItems(orderItems)[0]
-      : null;
+    return orderItems.length > 0 ? ordersFromItems(orderItems)[0] : null;
   }
 }
 

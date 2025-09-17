@@ -10,7 +10,9 @@ describe('NotFoundError', () => {
   });
 
   it('creates an error with message: "The Entity is not found."', () => {
-    expect(new NotFoundError('Entity').message).toBe('The Entity is not found.');
+    expect(new NotFoundError('Entity').message).toBe(
+      'The Entity is not found.',
+    );
   });
 });
 
@@ -26,14 +28,14 @@ describe('expectFound', () => {
   });
 
   it('throws an error if value is null', () => {
-    expect(
-      () => expectFound('Entity')(null),
-    ).toThrow(new NotFoundError('Entity'));
+    expect(() => expectFound('Entity')(null)).toThrow(
+      new NotFoundError('Entity'),
+    );
   });
 
   it('throws an error if value is undefined', () => {
-    expect(
-      () => expectFound('Entity')(undefined),
-    ).toThrow(new NotFoundError('Entity'));
+    expect(() => expectFound('Entity')(undefined)).toThrow(
+      new NotFoundError('Entity'),
+    );
   });
 });

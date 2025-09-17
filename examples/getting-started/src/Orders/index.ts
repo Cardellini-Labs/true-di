@@ -10,7 +10,11 @@ export const createOrderItem = (
   unitPrice: number = 0,
   quantity: number = 0,
 ): OrderItem => ({
-  id, orderId, sku, unitPrice, quantity,
+  id,
+  orderId,
+  sku,
+  unitPrice,
+  quantity,
 });
 
 const orderItemPrice = ({ unitPrice, quantity }: OrderItem): number =>
@@ -24,7 +28,7 @@ export const createOrder = (
 
 export const ordersFromItems = groupBy(
   ({ orderId }: OrderItem) => orderId,
-  (order: Order = createOrder(), orderItem) => { // eslint-disable-line default-param-last
+  (order: Order = createOrder(), orderItem) => {
     order.id = orderItem.orderId;
     order.items.push(orderItem);
     order.total = round2(order.total + orderItemPrice(orderItem));

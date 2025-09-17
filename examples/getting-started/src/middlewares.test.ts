@@ -4,12 +4,15 @@ import { IErrorLogger, IWarnLogger } from './interfaces';
 import { handleErrors } from './middlewares';
 import { NotFoundError } from './utils/NotFoundError';
 
-function returnThis<T>(this: T): T { return this; }
+function returnThis<T>(this: T): T {
+  return this;
+}
 
-const fakeResponse = (): Express.Response => ({
-  status: jest.fn(returnThis),
-  json: jest.fn(returnThis),
-}) as any;
+const fakeResponse = (): Express.Response =>
+  ({
+    status: jest.fn(returnThis),
+    json: jest.fn(returnThis),
+  }) as any;
 
 describe('handleErrors', () => {
   it('handles AssertionError: status = 400, warning: err.message, response: err.message', () => {
@@ -22,7 +25,12 @@ describe('handleErrors', () => {
     const next = jest.fn();
     const error = new AssertionError({ message: 'Something is wrong' });
 
-    handleErrors(error, {} as Express.Request, res, next)({ logger: fakeLogger });
+    handleErrors(
+      error,
+      {} as Express.Request,
+      res,
+      next,
+    )({ logger: fakeLogger });
 
     expect(next).not.toHaveBeenCalled();
     expect(fakeLogger.warn).toHaveBeenCalledWith('Something is wrong');
@@ -40,12 +48,19 @@ describe('handleErrors', () => {
     const next = jest.fn();
     const error = new NotFoundError('Entity');
 
-    handleErrors(error, {} as Express.Request, res, next)({ logger: fakeLogger });
+    handleErrors(
+      error,
+      {} as Express.Request,
+      res,
+      next,
+    )({ logger: fakeLogger });
 
     expect(next).not.toHaveBeenCalled();
     expect(fakeLogger.warn).toHaveBeenCalledWith('The Entity is not found.');
     expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.json).toHaveBeenCalledWith({ error: 'The Entity is not found.' });
+    expect(res.json).toHaveBeenCalledWith({
+      error: 'The Entity is not found.',
+    });
   });
 
   it('handles unrecognized error', () => {
@@ -58,7 +73,12 @@ describe('handleErrors', () => {
     const next = jest.fn();
     const error = new Error('Some Error');
 
-    handleErrors(error, {} as Express.Request, res, next)({ logger: fakeLogger });
+    handleErrors(
+      error,
+      {} as Express.Request,
+      res,
+      next,
+    )({ logger: fakeLogger });
 
     expect(next).not.toHaveBeenCalled();
     expect(fakeLogger.error).toHaveBeenCalledWith(error);

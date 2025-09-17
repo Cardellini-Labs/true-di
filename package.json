@@ -2,9 +2,6 @@
   "name": "true-di",
   "version": "3.0.0",
   "description": "Zero Dependency, Minimalistic **Type-Safe DI Container** for TypeScript and JavaScript projects",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/cjs/index.d.ts",
   "sideEffects": false,
   "files": [
     "dist"
@@ -26,7 +23,7 @@
   "scripts": {
     "test": "jest",
     "coveralls": "./.coveralls.sh",
-    "lint": "eslint ./src/**/*.ts",
+    "lint": "eslint src",
     "clear": "rm -rf ./lib; rm -rf ./esm",
     "compile": "tsc -b ./tsconfig.cjs.json ./tsconfig.esm.json && echo '{ \"type\": \"module\" }' > dist/esm/package.json && tsup",
     "build": "npm run clear; npm run compile"
@@ -57,9 +54,13 @@
     "@types/eslint": "^9.6.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.2.0",
+    "eslint": "^9.32.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.3.0",
     "jest": "^30.0.5",
+    "jiti": "^2.5.1",
+    "prettier": "^3.6.2",
     "ts-jest": "^29.4.1",
     "tsup": "^8.5.0",
     "typescript": "^5.9.2",

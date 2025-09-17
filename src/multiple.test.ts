@@ -5,12 +5,10 @@ import multiple from './multiple';
 describe('multiple', () => {
   it('decorates a factory', () => {
     type IContainer = {
-      datetime: number,
+      datetime: number;
     };
 
-    const factoryTuple = multiple<IContainer, 'datetime'>(
-      () => Date.now(),
-    );
+    const factoryTuple = multiple<IContainer, 'datetime'>(() => Date.now());
 
     expect(factoryTuple).toBeInstanceOf(Array);
     expect(factoryTuple[0]).toBeInstanceOf(Function);
@@ -19,12 +17,12 @@ describe('multiple', () => {
 
   it('could be used to multiplicate container item (factory)', () => {
     type IContainer = {
-      index: number,
+      index: number;
     };
 
     let counter = 0;
     const container = diContainer<IContainer>({
-      index: multiple(() => ++counter), // eslint-disable-line no-plusplus
+      index: multiple(() => ++counter),
     });
 
     expect(container.index).toBeDefined();
@@ -33,12 +31,13 @@ describe('multiple', () => {
 
   it('decorates a factory tuple', () => {
     type IContainer = {
-      datetime: number,
+      datetime: number;
     };
 
-    const factoryTuple = multiple<IContainer, 'datetime'>(
-      [() => Date.now(), () => {}],
-    );
+    const factoryTuple = multiple<IContainer, 'datetime'>([
+      () => Date.now(),
+      () => {},
+    ]);
 
     expect(factoryTuple).toBeInstanceOf(Array);
     expect(factoryTuple[0]).toBeInstanceOf(Function);
@@ -47,20 +46,20 @@ describe('multiple', () => {
 
   it('could be used to multiplicate container item (factory tuple)', () => {
     type Node = {
-      index: number,
-      parent: Node | null,
-      children: Node[],
-    }
+      index: number;
+      parent: Node | null;
+      children: Node[];
+    };
 
     type IContainer = {
-      index: number,
-      node: Node,
-      root: Node,
+      index: number;
+      node: Node;
+      root: Node;
     };
 
     let counter = 0;
     const container = diContainer<IContainer>({
-      index: multiple(() => ++counter), // eslint-disable-line no-plusplus
+      index: multiple(() => ++counter),
       node: multiple([
         ({ index }) => ({ index, parent: null, children: [] }),
         (node, { root }) => {
@@ -74,11 +73,9 @@ describe('multiple', () => {
 
     expect(container.root).toEqual({ index: 1, parent: null, children: [] });
 
-    expect([
-      container.node,
-      container.node,
-      container.node,
-    ]).toEqual(container.root.children);
+    expect([container.node, container.node, container.node]).toEqual(
+      container.root.children,
+    );
 
     expect(container.root).toEqual({
       index: 1,
@@ -93,19 +90,21 @@ describe('multiple', () => {
 
   it('could be used to decorate whole factories', () => {
     type Node = {
-      index: number,
-    }
+      index: number;
+    };
 
     type IContainer = {
-      index: number,
-      node: Node,
+      index: number;
+      node: Node;
     };
 
     let counter = 0;
-    const container = diContainer(multiple<IContainer>({
-      index: () => ++counter, // eslint-disable-line no-plusplus
-      node: ({ index }) => ({ index }),
-    }));
+    const container = diContainer(
+      multiple<IContainer>({
+        index: () => ++counter,
+        node: ({ index }) => ({ index }),
+      }),
+    );
 
     expect(container.node).toEqual({ index: 1 });
     expect(container.node).toEqual({ index: 2 });

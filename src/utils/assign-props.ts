@@ -6,18 +6,17 @@ type KeysOfType<T, F> = {
 
 type ObjectFieldKeys<T> = {
   [P in keyof T]: T[P] extends { [k in any]: any } ? P : never;
-}[keyof T]
+}[keyof T];
 
 export type IMapping<IContainer extends object, T> = {
-  [p in keyof T]?: keyof IContainer & KeysOfType<IContainer, T[p]>
-}
+  [p in keyof T]?: keyof IContainer & KeysOfType<IContainer, T[p]>;
+};
 
-export const assignProps = <IContainer extends object, N extends ObjectFieldKeys<IContainer>>(
-  mapping: IMapping<IContainer, IContainer[N]>,
-) => (instance: IContainer[N], container: IContainer): void =>
-    allNames<IMapping<IContainer, IContainer[N]>>(mapping).forEach(
-      name => {
-        // @ts-ignore
-        instance[name] = container[mapping[name]!];
-      },
-    );
+export const assignProps =
+  <IContainer extends object, N extends ObjectFieldKeys<IContainer>>(
+    mapping: IMapping<IContainer, IContainer[N]>,
+  ) =>
+  (instance: IContainer[N], container: IContainer): void =>
+    allNames<IMapping<IContainer, IContainer[N]>>(mapping).forEach((name) => {
+      (instance as any)[name] = container[mapping[name]!];
+    });

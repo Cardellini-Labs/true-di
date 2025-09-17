@@ -1,14 +1,11 @@
 import { Order } from '../Orders/types';
 
 export interface IGetOrders {
-  getOrders(): Promise<Order[]>
+  getOrders(): Promise<Order[]>;
 }
 
 export interface IGetOrderById {
-  getOrderById(id: string): Promise<Order | null>
+  getOrderById(id: string): Promise<Order | null>;
 }
 
-export interface IECommerceService extends
-  IGetOrders,
-  IGetOrderById
-{}
+export interface IECommerceService extends IGetOrders, IGetOrderById {}

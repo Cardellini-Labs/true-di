@@ -8,7 +8,9 @@ class FakeDataSourceService implements IDataSourceService {
     _logger.info('DataSourceService has been created');
   }
 
-  getOrderItems(predicate?: (orderItem: OrderItem) => boolean): Promise<OrderItem[]> {
+  getOrderItems(
+    predicate?: (orderItem: OrderItem) => boolean,
+  ): Promise<OrderItem[]> {
     return Promise.resolve(
       typeof predicate === 'function'
         ? this.#data.filter(predicate)

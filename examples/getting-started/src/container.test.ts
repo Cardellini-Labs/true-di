@@ -3,7 +3,11 @@ import { prepareAll, releaseAll } from 'true-di';
 import container from './container';
 import { IDataSourceService, IECommerceService, ILogger } from './interfaces';
 
-type AssertTypeEqual<T1, T2> = T1 extends T2 ? (T2 extends T1 ? true : never) : never;
+type AssertTypeEqual<T1, T2> = T1 extends T2
+  ? T2 extends T1
+    ? true
+    : never
+  : never;
 
 describe('container', () => {
   beforeAll(() => {
@@ -29,13 +33,19 @@ describe('container', () => {
   it('allows to get dataSourceService', () => {
     expect(container.dataSourceService).toBeDefined();
 
-    const typecheck: AssertTypeEqual<typeof container.dataSourceService, IDataSourceService> = true;
+    const typecheck: AssertTypeEqual<
+      typeof container.dataSourceService,
+      IDataSourceService
+    > = true;
   });
 
   it('allows to get eCommerceService', () => {
     expect(container.eCommerceService).toBeDefined();
 
-    const typecheck: AssertTypeEqual<typeof container.eCommerceService, IECommerceService> = true;
+    const typecheck: AssertTypeEqual<
+      typeof container.eCommerceService,
+      IECommerceService
+    > = true;
   });
 
   // or just single test
@@ -47,11 +57,13 @@ describe('container', () => {
     expect(items.eCommerceService).toBeDefined();
 
     const typecheck: AssertTypeEqual<
-      typeof items, {
-        logger: ILogger,
-        dataSourceService: IDataSourceService,
-        eCommerceService: IECommerceService,
-      }> = true;
+      typeof items,
+      {
+        logger: ILogger;
+        dataSourceService: IDataSourceService;
+        eCommerceService: IECommerceService;
+      }
+    > = true;
   });
 
   // or the same but with prepareAll
@@ -63,10 +75,12 @@ describe('container', () => {
     expect(items.eCommerceService).toBeDefined();
 
     const typecheck: AssertTypeEqual<
-      typeof items, {
-        logger: ILogger,
-        dataSourceService: IDataSourceService,
-        eCommerceService: IECommerceService,
-      }> = true;
+      typeof items,
+      {
+        logger: ILogger;
+        dataSourceService: IDataSourceService;
+        eCommerceService: IECommerceService;
+      }
+    > = true;
   });
 });

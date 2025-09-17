@@ -7,7 +7,7 @@ describe('Express App', () => {
   const baseUrl = `http://${HOST}:${PORT}`;
   let server: Server;
 
-  beforeAll(done => {
+  beforeAll((done) => {
     jest.spyOn(console, 'log').mockImplementation(() => {});
     jest.spyOn(console, 'info').mockImplementation(() => {});
     jest.spyOn(console, 'error').mockImplementation(() => {});

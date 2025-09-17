@@ -2,7 +2,10 @@ import { jest, expect, describe, it } from '@jest/globals';
 import { AssertionError } from 'assert';
 import ECommerceService from '.';
 import {
-  IDataSourceService, IECommerceService, IInfoLogger, OrderItem,
+  IDataSourceService,
+  IECommerceService,
+  IInfoLogger,
+  OrderItem,
 } from '../interfaces';
 import { ordersFromItems } from '../Orders';
 
@@ -45,20 +48,24 @@ const fakeOrderItems = [
 ];
 
 const createFakeInfoLogger = () => ({
-  info: jest.fn<IInfoLogger["info"]>(),
+  info: jest.fn<IInfoLogger['info']>(),
 });
 
 const createFakeDataSourceService = () => ({
-  getOrderItems: jest.fn<IDataSourceService["getOrderItems"]>().mockResolvedValue(fakeOrderItems),
+  getOrderItems: jest
+    .fn<IDataSourceService['getOrderItems']>()
+    .mockResolvedValue(fakeOrderItems),
 });
-
 
 describe('ECommerceService', () => {
   it('allows to instantiate eCommerceService', () => {
     const fakeLogger: IInfoLogger = createFakeInfoLogger();
 
     const fakeDataSource = createFakeDataSourceService();
-    const eCommerceService: IECommerceService = new ECommerceService(fakeLogger, fakeDataSource);
+    const eCommerceService: IECommerceService = new ECommerceService(
+      fakeLogger,
+      fakeDataSource,
+    );
 
     expect(eCommerceService).toBeInstanceOf(ECommerceService);
   });
@@ -69,9 +76,14 @@ describe('ECommerceService', () => {
     const fakeLogger: IInfoLogger = createFakeInfoLogger();
 
     const fakeDataSource = createFakeDataSourceService();
-    const eCommerceService: IECommerceService = new ECommerceService(fakeLogger, fakeDataSource);
+    const eCommerceService: IECommerceService = new ECommerceService(
+      fakeLogger,
+      fakeDataSource,
+    );
 
-    expect(await eCommerceService.getOrders()).toEqual(ordersFromItems(fakeOrderItems));
+    expect(await eCommerceService.getOrders()).toEqual(
+      ordersFromItems(fakeOrderItems),
+    );
   });
 
   it('returns order with method .getOrderById', async () => {
@@ -80,12 +92,16 @@ describe('ECommerceService', () => {
     const fakeLogger: IInfoLogger = createFakeInfoLogger();
 
     const fakeDataSource = {
-      getOrderItems: jest.fn(
-        (predicate?: (orderItem: OrderItem) => boolean) =>
-          Promise.resolve(fakeOrderItems.filter(predicate != null ? predicate : () => true)),
+      getOrderItems: jest.fn((predicate?: (orderItem: OrderItem) => boolean) =>
+        Promise.resolve(
+          fakeOrderItems.filter(predicate != null ? predicate : () => true),
+        ),
       ),
     };
-    const eCommerceService: IECommerceService = new ECommerceService(fakeLogger, fakeDataSource);
+    const eCommerceService: IECommerceService = new ECommerceService(
+      fakeLogger,
+      fakeDataSource,
+    );
 
     expect(
       await eCommerceService.getOrderById(fakeOrderItems[0].orderId),
@@ -100,9 +116,14 @@ describe('ECommerceService', () => {
     const fakeDataSource = createFakeDataSourceService();
     fakeDataSource.getOrderItems.mockResolvedValueOnce([]);
 
-    const eCommerceService: IECommerceService = new ECommerceService(fakeLogger, fakeDataSource);
+    const eCommerceService: IECommerceService = new ECommerceService(
+      fakeLogger,
+      fakeDataSource,
+    );
     expect(
-      await eCommerceService.getOrderById('9acec35f-2402-40a7-92cc-664a4ade4778'),
+      await eCommerceService.getOrderById(
+        '9acec35f-2402-40a7-92cc-664a4ade4778',
+      ),
     ).toEqual(null);
   });
 
@@ -114,9 +135,14 @@ describe('ECommerceService', () => {
     const fakeDataSource = createFakeDataSourceService();
     fakeDataSource.getOrderItems.mockResolvedValueOnce([]);
 
-    const eCommerceService: IECommerceService = new ECommerceService(fakeLogger, fakeDataSource);
+    const eCommerceService: IECommerceService = new ECommerceService(
+      fakeLogger,
+      fakeDataSource,
+    );
 
-    const error = await eCommerceService.getOrderById('9acec35f-2402-40a7-92cc').catch(err => err);
+    const error = await eCommerceService
+      .getOrderById('9acec35f-2402-40a7-92cc')
+      .catch((err) => err);
 
     expect(error).toBeInstanceOf(AssertionError);
   });

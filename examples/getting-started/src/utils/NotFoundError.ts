@@ -6,7 +6,9 @@ export class NotFoundError extends Error {
   }
 }
 
-export const expectFound = (entityTypeName: string) => <T>(value: T | null | undefined): T => {
-  if (value == null) throw new NotFoundError(entityTypeName);
-  return value;
-};
+export const expectFound =
+  (entityTypeName: string) =>
+  <T>(value: T | null | undefined): T => {
+    if (value == null) throw new NotFoundError(entityTypeName);
+    return value;
+  };

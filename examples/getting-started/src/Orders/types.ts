@@ -4,10 +4,10 @@ export type OrderItem = {
   sku: string;
   unitPrice: number;
   quantity: number;
-}
+};
 
 export type Order = {
   id: string;
-  items: OrderItem[],
-  total: number,
-}
+  items: OrderItem[];
+  total: number;
+};

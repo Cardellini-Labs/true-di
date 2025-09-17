@@ -3,16 +3,12 @@ import allNames from './all-names';
 
 describe('allNames', () => {
   it('returns field names from object', () => {
-    expect(
-      allNames({ x: 1, y: 2 }),
-    ).toEqual(['x', 'y']);
+    expect(allNames({ x: 1, y: 2 })).toEqual(['x', 'y']);
   });
 
   it('returns symbolic names too', () => {
     const $field = Symbol('symbolic field');
-    expect(
-      allNames({ x: 1, [$field]: $field }),
-    ).toEqual(['x', $field]);
+    expect(allNames({ x: 1, [$field]: $field })).toEqual(['x', $field]);
   });
 
   it('works with null-prototpyed objects', () => {
@@ -20,9 +16,7 @@ describe('allNames', () => {
     obj.x = 1;
     obj.y = 'y';
 
-    expect(
-      allNames(obj),
-    ).toEqual(['x', 'y']);
+    expect(allNames(obj)).toEqual(['x', 'y']);
   });
 
   it('works with null-prototpyed objects and symbolic names', () => {
@@ -32,8 +26,6 @@ describe('allNames', () => {
     obj.y = 'y';
     obj[$field] = $field;
 
-    expect(
-      allNames(obj),
-    ).toEqual(['x', 'y', $field]);
+    expect(allNames(obj)).toEqual(['x', 'y', $field]);
   });
 });
