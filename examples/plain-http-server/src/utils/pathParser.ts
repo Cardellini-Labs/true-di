@@ -1,5 +1,5 @@
 import {
-  pathToRegexp, Path, PathToRegexpOptions, ParseOptions,
+  pathToRegexp, type Path, type PathToRegexpOptions, type ParseOptions,
 } from 'path-to-regexp';
 
 export const pathParser = (pathPattern: Path, options?: PathToRegexpOptions & ParseOptions) => {

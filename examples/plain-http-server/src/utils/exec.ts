@@ -1,5 +1,5 @@
-import { IncomingMessage } from 'http';
-import { Path } from 'path-to-regexp';
+import { type IncomingMessage } from 'http';
+import { type Path } from 'path-to-regexp';
 import { pathParser } from './pathParser';
 
 const match = <P, T, C>(pathPattern: Path, fn: (context:C, params: P) => T) => {
