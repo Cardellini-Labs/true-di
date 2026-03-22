@@ -60,7 +60,7 @@
   ],
   "overrides": [
     {
-      "files": ["*.test.ts",],
+      "files": ["*.test.ts"],
       "rules": {
         "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
         "no-unused-expressions": "off",
